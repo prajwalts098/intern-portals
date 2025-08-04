@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Intern/Volunteer Registration</h2>
+  <form id="registrationForm">
+    <input type="text" name="name" placeholder="Full Name" required><br>
+    <input type="email" name="email" placeholder="Email" required><br>
+    <input type="text" name="phone" placeholder="Phone Number" required><br>
+    <select name="role">
+      <option value="Intern">Intern</option>
+      <option value="Volunteer">Volunteer</option>
+    </select><br>
+    <textarea name="motivation" placeholder="Why do you want to join?" required></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        role: form.role.value,
+        motivation: form.motivation.value
+      };
+
+      await fetch('http://localhost:5000/api/applicants', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+
+      alert("Application Submitted!");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
